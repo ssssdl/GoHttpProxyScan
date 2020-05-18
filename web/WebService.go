@@ -137,38 +137,22 @@ type event struct {
 	Message   string `json:"message"`
 }
 
-func Server(addr string, REFRESH int) {
-	/***** 【启动WEB服务】 *****/
+func Server(addr string) {
+	/***** 【配置web服务】 *****/
 	app := iris.New()
 	app.Use(recover.New())
 	app.Use(logger.New())
 	app.Logger().SetLevel("debug") //设置日志级别为调试级别
-	////GET请求示例-1 返回html
-	//app.Handle("GET","/",func(ctx iris.Context){
-	//	//app.Logger().SetPrefix("[+][GET-1]")  //这个输出存在问题，会打印ascii码
-	//	app.Logger().Info(ctx.Path())
-	//	ctx.HTML("<h1>hello world</h1>")
-	//})
-	////GET请求示例-2 返回json
-	//app.Get("/ping",func(ctx iris.Context){
-	//	ctx.WriteString("hello world")
-	//})
-	//
-	////GET请求示例-3 返回json 获取请求参数
-	//app.Get("/hello", func(ctx iris.Context) {
-	//	id := ctx.URLParam("id")
-	//	app.Logger().Info("GET id="+id)
-	//	ctx.JSON(iris.Map{"msg":"hello world","id":id})
-	//})
 
+	/***** 【配置sse服务】 *****/
 	//使用sse展示消息队列
 	broker := NewBroker()
 	//发送消息
-	REFRESH++
 	go func() {
 		//如果消息队列不为空则向浏览器推送消息
 		var msg string
 		for {
+			//todo config：可以在这里调整刷新频率，配置
 			// time.Sleep(200 * time.Millisecond)
 			if MassageQueue.MsgQueue.Size() != 0 {
 				msg = MassageQueue.MsgQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
@@ -185,18 +169,6 @@ func Server(addr string, REFRESH int) {
 				}
 				broker.Notifier <- evtBytes
 			}
-			//time.Sleep(2 * time.Second)
-			//now := time.Now()
-			//evt := event{
-			//	Timestamp: now.Unix(),
-			//	Message:   fmt.Sprintf("Hello at %s", now.Format(time.RFC1123)),
-			//}
-			//evtBytes, err := json.Marshal(evt)
-			//if err != nil {
-			//	golog.Error(err)
-			//	continue
-			//}
-			//broker.Notifier <- evtBytes
 		}
 	}()
 	app.Get("/", func(ctx context.Context) {
@@ -214,7 +186,22 @@ func Server(addr string, REFRESH int) {
              </html>`)
 	})
 	app.Get("/events", broker.ServeHTTP)
-	// http://localhost:8080
-	// http://localhost:8080/events
+
+	/***** 【配置静态资源】 *****/
+	// app.Favicon("./web/ico/one.ico", "/favicon.ico")			//网站图表
+	// 上面可以 这样访问  localhost:8080/favicon.ico
+	app.HandleDir("/static", "./web/static") //静态资源
+
+	/******* 【配置网页视图】 *******/
+	tmpl := iris.HTML("./web/view", ".html")
+	tmpl.Reload(true) //在每个请求上重新加载模板（开发模式）
+	app.RegisterView(tmpl)
+
+	/******* 【页面交互】 *******/
+	app.Get("/html", func(ctx context.Context) {
+		ctx.ViewData("title", "被动扫描器") //模板中添加数据，前面是模板中的key，后面是要渲染的内容，可以添加多个
+		ctx.View("index.html")
+	})
+
 	app.Run(iris.Addr(addr), iris.WithoutServerError(iris.ErrServerClosed))
 }

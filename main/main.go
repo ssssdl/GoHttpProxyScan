@@ -59,7 +59,7 @@ func https_Decrypt() {
 }
 
 func main() {
-	//todo：多线程启动sse和proxy
+	//todo：总结配置在main函数中
 
 	/***** 【日志信息配置】 *****/
 	log.SetPrefix("【main】")
@@ -68,26 +68,11 @@ func main() {
 	/***** 【创建消息队列】 *****/
 
 	/***** 【启动代理程序】 *****/
-	//go http_proxy_simple(MsgQueue)
-	//https_Decrypt(MsgQueue)	//简易https代理
+	go http_proxy_simple()
+	//go https_Decrypt()	//简易https代理
 
-	/***** 【Put测试】 *****/
-	go func() {
-		time.Sleep(5000 * time.Millisecond) //不只是给浏览器加载网页的时间  还是一个异步的时间  没有这个就加载不到消息 和bug无关
-		//for i:=0;i<100 ;i++  {
-		//	MassageQueue.MsgQueue.Put(strconv.Itoa(i))
-		//}
-		//time.Sleep(2000*time.Millisecond)
-		//for i:=0;i<100 ;i++  {
-		//	MassageQueue.MsgQueue.Put(strconv.Itoa(i))
-		//}
-		http_proxy_simple()
-	}()
 	/***** 【启动WEB服务】 *****/
-	//设置sse刷新频率
-	//time.Sleep(10 * time.Second)
-	REFRESH := 1 //刷新间隔,防止占用服务器资源
-	go web.Server(":8080", REFRESH)
+	go web.Server(":8080")
 
 	//防止线程结束
 	var str string
