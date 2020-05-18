@@ -205,7 +205,6 @@ func (p *Proxy) DoRequest(ctx *Context, responseFunc func(*http.Response, error)
 	//多次读取http响应
 	Newresp, _ := httputil.DumpResponse(resp, true)
 	//fmt.Println(string(Newresp))
-	//todo 将消息队列传入
 	plugin.Loader(newReq, string(Newresp))
 	//如果使用如下读取响应的方法会自动调用close()使浏览器接收不到响应
 	//body, err := ioutil.ReadAll(Newresp.Body)

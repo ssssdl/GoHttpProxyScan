@@ -74,7 +74,6 @@ func main() {
 	/***** 【Put测试】 *****/
 	go func() {
 		time.Sleep(5000 * time.Millisecond) //不只是给浏览器加载网页的时间  还是一个异步的时间  没有这个就加载不到消息 和bug无关
-		//todo 是队列的问题  将队列get空后重新添加 size无法减少  链表空节点
 		//for i:=0;i<100 ;i++  {
 		//	MassageQueue.MsgQueue.Put(strconv.Itoa(i))
 		//}
@@ -85,7 +84,6 @@ func main() {
 		http_proxy_simple()
 	}()
 	/***** 【启动WEB服务】 *****/
-	//todo 删除刷新频率，有新消息实时推送
 	//设置sse刷新频率
 	//time.Sleep(10 * time.Second)
 	REFRESH := 1 //刷新间隔,防止占用服务器资源

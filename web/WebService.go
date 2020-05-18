@@ -169,7 +169,6 @@ func Server(addr string, REFRESH int) {
 		//如果消息队列不为空则向浏览器推送消息
 		var msg string
 		for {
-			//todo 尽可能删除刷新率，不行的话 在性能和时效性取一个中心值
 			// time.Sleep(200 * time.Millisecond)
 			if MassageQueue.MsgQueue.Size() != 0 {
 				msg = MassageQueue.MsgQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
