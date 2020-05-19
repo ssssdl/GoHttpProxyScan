@@ -19,7 +19,7 @@ type MassageQueue struct {
 //消息节点
 type Massage struct {
 	NextMsg *Massage
-	content string //消息内容 //todo 消息内容改成map的形式
+	content map[string]string //消息内容 //todo 消息内容改成map的形式map[string]string
 }
 
 func New() *MassageQueue {
@@ -32,7 +32,7 @@ func New() *MassageQueue {
 //向消息队列中添加消息
 //参数：消息内容（content string）
 //todo：将消息写入文件作为备份
-func (MassageQueue *MassageQueue) Put(content string) {
+func (MassageQueue *MassageQueue) Put(content map[string]string) {
 	MassageQueue.Lock()         //锁定队列
 	defer MassageQueue.Unlock() //使用defer来自动解锁消息队列
 	msg := &Massage{            //创建消息节点
@@ -49,12 +49,12 @@ func (MassageQueue *MassageQueue) Put(content string) {
 
 //获取消息
 //返回：消息内容（string）
-func (MassageQueue *MassageQueue) Get() string {
+func (MassageQueue *MassageQueue) Get() map[string]string {
 	MassageQueue.Lock()               //锁定消息队列
 	defer MassageQueue.Unlock()       //使用defer来解锁消息队列
 	if MassageQueue.FirstMsg == nil { //如果FirstMsg是空的说明消息队列为空，直接返回空
 		log.Println(MassageQueue.size)
-		return ""
+		return nil
 	}
 	content := MassageQueue.FirstMsg.content              //获取第一个消息内容
 	MassageQueue.FirstMsg = MassageQueue.FirstMsg.NextMsg //第一个消息已经被读取，将FirstMsg指向下一个消息

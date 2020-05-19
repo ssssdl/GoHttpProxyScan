@@ -5,8 +5,6 @@ import (
 	"net/http"
 )
 
-//todo 制作获取插件信息接口
-
 type HttpHistory struct{}
 
 //todo 插件文档整理以下规范，以下为规范，需要使用者填写info中的信息
@@ -36,5 +34,8 @@ func (p *HttpHistory) GetPluginInfo() map[string]string {
 }
 
 func (p *HttpHistory) GetHttp(Req *http.Request, Resp string) {
-	MassageQueue.HttpHistoryQueue.Put(Req.URL.String())
+	var msg map[string]string
+	msg = make(map[string]string)
+	msg["URL"] = Req.URL.String()
+	MassageQueue.HttpHistoryQueue.Put(msg)
 }

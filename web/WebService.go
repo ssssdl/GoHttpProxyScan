@@ -175,7 +175,7 @@ func Server(addr string) {
 	//发送消息
 	go func() {
 		//如果消息队列不为空则向浏览器推送消息
-		var msg string
+		msg := make(map[string]string)
 		for {
 			//todo config：可以在这里调整刷新频率，配置
 			// time.Sleep(200 * time.Millisecond)
@@ -185,7 +185,7 @@ func Server(addr string) {
 				evt := event{
 					Timestamp: now.Format(time.RFC1123),
 					//Timestamp: MassageQueue.MsgQueue.Size(),
-					Message: fmt.Sprintf("Msg is %s", msg),
+					Message: fmt.Sprintf("Msg is %s", msg["URL"]),
 				}
 				evtBytes, err := json.Marshal(evt)
 				if err != nil {
@@ -217,7 +217,7 @@ func Server(addr string) {
 	brokerScanMsg := NewBroker()
 	go func() {
 		//如果消息队列不为空则向浏览器推送消息
-		var msg string
+		msg := make(map[string]string)
 		for {
 			//todo config：可以在这里调整刷新频率，配置
 			// time.Sleep(200 * time.Millisecond)
@@ -227,7 +227,7 @@ func Server(addr string) {
 				evt := event{
 					Timestamp: now.Format(time.RFC1123),
 					//Timestamp: MassageQueue.MsgQueue.Size(),
-					Message: fmt.Sprintf("Msg is %s", msg),
+					Message: fmt.Sprintf("Msg is %s", msg["INFO"]),
 				}
 				evtBytes, err := json.Marshal(evt)
 				if err != nil {
