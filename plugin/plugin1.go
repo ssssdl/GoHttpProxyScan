@@ -2,7 +2,6 @@ package plugin
 
 import (
 	"../MassageQueue"
-	"log"
 	"net/http"
 )
 
@@ -45,7 +44,7 @@ func (p *plugin1) GetHttp(Req *http.Request, Resp string) {
 	MassageQueue.MsgQueue.Put(Req.Host)
 
 	//测试
-	log.SetPrefix("【main】")
-	log.SetFlags(log.LstdFlags | log.Lshortfile | log.LUTC)
-	log.Println(MassageQueue.MsgQueue.Get())
+	//log.SetPrefix("【main】")
+	//log.SetFlags(log.LstdFlags | log.Lshortfile | log.LUTC)
+	//log.Println(MassageQueue.MsgQueue.Get())
 }

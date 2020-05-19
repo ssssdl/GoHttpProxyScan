@@ -36,5 +36,5 @@ func (p *HttpHistory) GetPluginInfo() map[string]string {
 }
 
 func (p *HttpHistory) GetHttp(Req *http.Request, Resp string) {
-	MassageQueue.HttpHistoryQueue.Put(Req.Host)
+	MassageQueue.HttpHistoryQueue.Put(Req.URL.String())
 }

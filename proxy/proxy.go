@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -203,9 +204,14 @@ func (p *Proxy) DoRequest(ctx *Context, responseFunc func(*http.Response, error)
 	//fmt.Print(newReq.Header)
 
 	//多次读取http响应
-	Newresp, _ := httputil.DumpResponse(resp, true)
+
+	DumpResp, err := httputil.DumpResponse(resp, true)
+	//todo 这里调用DumpResponse会概率爆出异常 使用下面的异常捕捉捕捉不到
+	if err != nil {
+		log.Println("dump错误，请求url为" + newReq.URL.String())
+	}
 	//fmt.Println(string(Newresp))
-	plugin.Loader(newReq, string(Newresp))
+	plugin.Loader(newReq, string(DumpResp))
 	//如果使用如下读取响应的方法会自动调用close()使浏览器接收不到响应
 	//body, err := ioutil.ReadAll(Newresp.Body)
 	//fmt.Println(string(body))
@@ -215,7 +221,7 @@ func (p *Proxy) DoRequest(ctx *Context, responseFunc func(*http.Response, error)
 // HTTP转发
 func (p *Proxy) forwardHTTP(ctx *Context, rw http.ResponseWriter) {
 	ctx.Req.URL.Scheme = "http"
-	fmt.Println(ctx)
+	//fmt.Println(ctx)
 	p.DoRequest(ctx, func(resp *http.Response, err error) {
 		if err != nil {
 			p.delegate.ErrorLog(fmt.Errorf("%s - HTTP请求错误: , 错误: %s", ctx.Req.URL, err))

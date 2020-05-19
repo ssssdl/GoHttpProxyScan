@@ -19,7 +19,7 @@ type MassageQueue struct {
 //消息节点
 type Massage struct {
 	NextMsg *Massage
-	content string //消息内容
+	content string //消息内容 //todo 消息内容改成map的形式
 }
 
 func New() *MassageQueue {

@@ -132,6 +132,28 @@ if(typeof(EventSource) !== "undefined") {
     document.getElementById("header").innerHTML = "<h2>SSE not supported by this client-protocol</h2>";
 }
 </script>`
+const scanScript = `<script type="text/javascript">
+if(typeof(EventSource) !== "undefined") {
+    console.log("server-sent events supported");
+    var client = new EventSource("http://localhost:8080/eventsscan");
+    var index = 1;
+    client.onmessage = function (evt) {
+        console.log(evt);
+        // it's not required that you send and receive JSON, you can just output the "evt.data" as well.
+        dataJSON = JSON.parse(evt.data)
+        var table = document.getElementById("messagesTable");
+        var row = table.insertRow(index);
+        var cellTimestamp = row.insertCell(0);
+        var cellMessage = row.insertCell(1);
+        cellTimestamp.innerHTML = dataJSON.timestamp;
+        cellMessage.innerHTML = dataJSON.message;
+        index++;
+        window.scrollTo(0,document.body.scrollHeight);
+    };
+} else {
+    document.getElementById("header").innerHTML = "<h2>SSE not supported by this client-protocol</h2>";
+}
+</script>`
 
 //原来返回的消息
 type event struct {
@@ -146,8 +168,9 @@ func Server(addr string) {
 	app.Use(logger.New())
 	app.Logger().SetLevel("debug") //设置日志级别为调试级别
 
+	//todo 消息展示除了使用网页的方式 还要添加命令行的方式，main函数中配置命令行是否显示http历史记录的开关
 	/***** 【配置sse服务】 *****/
-	//使用sse展示消息队列
+	//第一个消息sse ： 用于推送http历史记录
 	broker := NewBroker()
 	//发送消息
 	go func() {
@@ -173,12 +196,12 @@ func Server(addr string) {
 			}
 		}
 	}()
-	//todo 需要两个sse推送不同的消息 ， http历史记录和扫描信息，可能需要两个不同的队列
-	app.Get("/sse", func(ctx context.Context) {
+	//http历史记录推送
+	app.Get("/ssehttp", func(ctx context.Context) {
 		ctx.HTML(
 			`<html><head><title>HTTP历史记录</title>` + script + `</head>
                 <body>
-                    <h1 id="header">Waiting for messages...</h1>
+                    <h1 id="header">HTTP历史记录</h1>
                     <table id="messagesTable" border="1">
                         <tr>
                             <th>时间</th> 
@@ -189,6 +212,48 @@ func Server(addr string) {
              </html>`)
 	})
 	app.Get("/events", broker.ServeHTTP)
+
+	//第二个消息sse，用于推送扫描结果
+	brokerScanMsg := NewBroker()
+	go func() {
+		//如果消息队列不为空则向浏览器推送消息
+		var msg string
+		for {
+			//todo config：可以在这里调整刷新频率，配置
+			// time.Sleep(200 * time.Millisecond)
+			if MassageQueue.MsgQueue.Size() != 0 {
+				msg = MassageQueue.MsgQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
+				now := time.Now()
+				evt := event{
+					Timestamp: now.Format(time.RFC1123),
+					//Timestamp: MassageQueue.MsgQueue.Size(),
+					Message: fmt.Sprintf("Msg is %s", msg),
+				}
+				evtBytes, err := json.Marshal(evt)
+				if err != nil {
+					golog.Error(err)
+					continue
+				}
+				brokerScanMsg.Notifier <- evtBytes
+			}
+		}
+	}()
+	//扫描结果推送
+	app.Get("/ssescan", func(ctx context.Context) {
+		ctx.HTML(
+			`<html><head><title>扫描结果</title>` + scanScript + `</head>
+                <body>
+                    <h1 id="header">扫描结果</h1>
+                    <table id="messagesTable" border="1">
+                        <tr>
+                            <th>时间</th> 
+                            <th>消息</th>
+                        </tr>
+                    </table>
+                </body>
+             </html>`)
+	})
+	app.Get("/eventsscan", brokerScanMsg.ServeHTTP)
 
 	/***** 【配置静态资源】 *****/
 	//todo  shortcut.js和core.js需要单独控制，
