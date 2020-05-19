@@ -171,7 +171,8 @@ func Server(addr string) {
 			}
 		}
 	}()
-	app.Get("/", func(ctx context.Context) {
+	//todo 需要两个sse推送不同的消息
+	app.Get("/sse", func(ctx context.Context) {
 		ctx.HTML(
 			`<html><head><title>SSE</title>` + script + `</head>
                 <body>
@@ -188,7 +189,7 @@ func Server(addr string) {
 	app.Get("/events", broker.ServeHTTP)
 
 	/***** 【配置静态资源】 *****/
-	// app.Favicon("./web/ico/one.ico", "/favicon.ico")			//网站图表
+	//app.Favicon("./web/static/favicon.ico", "/favicon.ico")			//网站图表
 	// 上面可以 这样访问  localhost:8080/favicon.ico
 	app.HandleDir("/static", "./web/static") //静态资源
 
