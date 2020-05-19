@@ -4,9 +4,15 @@ import (
 	"net/http"
 )
 
+//todo  整理插件文档
+//MassageQueue.HttpHistoryQueue		http历史记录消息队列
+//MassageQueue.MsgQueue				插件扫描消息队列
+
 type pluginfunc interface {
-	request(Req *http.Request)
-	respones(Resp string)
+	//request(Req *http.Request)
+	//respones(Resp string)
+	GetHttp(Req *http.Request, Resp string) //获取http流量传入到插件中   加载插件自动执行该函数
+	GetPluginInfo() map[string]string       //todo 插件信息				后续整理插件信息到打印到网页上
 }
 
 // 定义一个类，来存放我们的插件
@@ -20,7 +26,6 @@ func (p *plugins) init() {
 }
 
 // 注册插件
-
 func (p *plugins) register(name string, plugin pluginfunc) {
 	p.plist[name] = plugin
 	//p.plist = append(p.plist, a)
@@ -30,17 +35,27 @@ func (p *plugins) register(name string, plugin pluginfunc) {
 // Req 请求 resp 响应  模块中要导出的函数，必须首字母大写。
 //func Loader(Req *http.Request,Resp string,MsgQueue *MassageQueue.MassageQueue){
 func Loader(Req *http.Request, Resp string) {
+	/*****【初始化】******/
 	plugin := new(plugins)
 	plugin.init()
 
+	/*****【实例化插件】******/
+	//所有的插件写好要到这里来实例化
 	plugin1 := new(plugin1)
-	plugin2 := new(plugin2)
-	plugin3 := new(plugin3)
+	HttpHistory := new(HttpHistory)
+	//plugin2 := new(plugin2)
+	//plugin3 := new(plugin3)
+
+	/*****【注册插件】******/
+	//所有的插件写好要到这里来注册
 	plugin.register("plugin1", plugin1)
-	plugin.register("plugin2", plugin2)
-	plugin.register("plugin3", plugin3)
+	plugin.register("HttpHistory", HttpHistory)
+	//plugin.register("plugin2", plugin2)
+	//plugin.register("plugin3", plugin3)
+
+	/*****【加载插件入口函数】******/
+	//后续可以在这里添加其他的函数，会被默认调用
 	for _, plugin := range plugin.plist {
-		plugin.request(Req)
-		plugin.respones(Resp)
+		plugin.GetHttp(Req, Resp)
 	}
 }

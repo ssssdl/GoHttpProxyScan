@@ -17,6 +17,8 @@ import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
+	"time"
+
 	//注意: 由于某种原因，最新的vscode-go语言扩展不能提供足够智能帮助（参数文档并转到定义功能）
 	//对于`iris.Context`别名，因此如果您使用VS Code，则导入`Context`的原始导入路径，它将执行此操作：
 	"github.com/kataras/iris/context"
@@ -133,7 +135,7 @@ if(typeof(EventSource) !== "undefined") {
 
 //原来返回的消息
 type event struct {
-	Timestamp int    `json:"timestamp"`
+	Timestamp string `json:"timestamp"`
 	Message   string `json:"message"`
 }
 
@@ -154,13 +156,13 @@ func Server(addr string) {
 		for {
 			//todo config：可以在这里调整刷新频率，配置
 			// time.Sleep(200 * time.Millisecond)
-			if MassageQueue.MsgQueue.Size() != 0 {
-				msg = MassageQueue.MsgQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
-				//now := time.Now()
+			if MassageQueue.HttpHistoryQueue.Size() != 0 {
+				msg = MassageQueue.HttpHistoryQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
+				now := time.Now()
 				evt := event{
-					//Timestamp: now.Unix(),
-					Timestamp: MassageQueue.MsgQueue.Size(),
-					Message:   fmt.Sprintf("Msg is %s", msg),
+					Timestamp: now.Format(time.RFC1123),
+					//Timestamp: MassageQueue.MsgQueue.Size(),
+					Message: fmt.Sprintf("Msg is %s", msg),
 				}
 				evtBytes, err := json.Marshal(evt)
 				if err != nil {
@@ -171,16 +173,16 @@ func Server(addr string) {
 			}
 		}
 	}()
-	//todo 需要两个sse推送不同的消息
+	//todo 需要两个sse推送不同的消息 ， http历史记录和扫描信息，可能需要两个不同的队列
 	app.Get("/sse", func(ctx context.Context) {
 		ctx.HTML(
-			`<html><head><title>SSE</title>` + script + `</head>
+			`<html><head><title>HTTP历史记录</title>` + script + `</head>
                 <body>
                     <h1 id="header">Waiting for messages...</h1>
                     <table id="messagesTable" border="1">
                         <tr>
-                            <th>Timestamp (server)</th> 
-                            <th>Message</th>
+                            <th>时间</th> 
+                            <th>url</th>
                         </tr>
                     </table>
                 </body>
@@ -189,7 +191,8 @@ func Server(addr string) {
 	app.Get("/events", broker.ServeHTTP)
 
 	/***** 【配置静态资源】 *****/
-	//app.Favicon("./web/static/favicon.ico", "/favicon.ico")			//网站图表
+	//todo  shortcut.js和core.js需要单独控制，
+	app.Favicon("./web/static/favicon.ico", "/favicon.ico") //网站图标
 	// 上面可以 这样访问  localhost:8080/favicon.ico
 	app.HandleDir("/static", "./web/static") //静态资源
 
@@ -199,6 +202,7 @@ func Server(addr string) {
 	app.RegisterView(tmpl)
 
 	/******* 【页面交互】 *******/
+	//todo  剔除网页上没有用的功能，最后收尾的时候做
 	app.Get("/html", func(ctx context.Context) {
 		ctx.ViewData("title", "被动扫描器") //模板中添加数据，前面是模板中的key，后面是要渲染的内容，可以添加多个
 		ctx.View("index.html")

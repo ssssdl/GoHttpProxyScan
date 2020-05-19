@@ -70,4 +70,6 @@ func (MassageQueue *MassageQueue) Size() int {
 	return MassageQueue.size    //返回消息长度
 }
 
-var MsgQueue = New()
+var MsgQueue = New() //用于存放扫描消息
+
+var HttpHistoryQueue = New() //用于存放http历史记录
