@@ -43,7 +43,10 @@ func (p *plugin1) GetPluginInfo() map[string]string {
 func (p *plugin1) GetHttp(Req *http.Request, Resp string) {
 	var msg map[string]string
 	msg = make(map[string]string)
-	msg["INFO"] = Req.Host
+	//Level: fmt.Sprintf("Msg is %s", msg["Level"]),
+	//Content: fmt.Sprintf("Msg is %s", msg["Content"]),
+	msg["Level"] = "INFO"
+	msg["Content"] = Req.Host
 	MassageQueue.MsgQueue.Put(msg)
 
 	//测试

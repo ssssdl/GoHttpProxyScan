@@ -110,6 +110,8 @@ func (b *Broker) ServeHTTP(ctx context.Context) {
 	}
 }
 
+//todo 以下两处js的链接域名统一配置  配置文件
+//http历史记录的js
 const script = `<script type="text/javascript">
 if(typeof(EventSource) !== "undefined") {
     console.log("server-sent events supported");
@@ -122,9 +124,11 @@ if(typeof(EventSource) !== "undefined") {
         var table = document.getElementById("messagesTable");
         var row = table.insertRow(index);
         var cellTimestamp = row.insertCell(0);
-        var cellMessage = row.insertCell(1);
-        cellTimestamp.innerHTML = dataJSON.timestamp;
-        cellMessage.innerHTML = dataJSON.message;
+        var cellURL = row.insertCell(1);
+		var cellStatus = row.insertCell(2);
+        cellTimestamp.innerHTML = dataJSON.Time;
+        cellURL.innerHTML = dataJSON.URL;
+		cellStatus.innerHTML = dataJSON.Status;
         index++;
         window.scrollTo(0,document.body.scrollHeight);
     };
@@ -132,6 +136,8 @@ if(typeof(EventSource) !== "undefined") {
     document.getElementById("header").innerHTML = "<h2>SSE not supported by this client-protocol</h2>";
 }
 </script>`
+
+//扫描结果界面的js
 const scanScript = `<script type="text/javascript">
 if(typeof(EventSource) !== "undefined") {
     console.log("server-sent events supported");
@@ -143,10 +149,12 @@ if(typeof(EventSource) !== "undefined") {
         dataJSON = JSON.parse(evt.data)
         var table = document.getElementById("messagesTable");
         var row = table.insertRow(index);
-        var cellTimestamp = row.insertCell(0);
-        var cellMessage = row.insertCell(1);
-        cellTimestamp.innerHTML = dataJSON.timestamp;
-        cellMessage.innerHTML = dataJSON.message;
+        var cellTime = row.insertCell(0);
+        var cellLevel = row.insertCell(1);
+		var cellContent = row.insertCell(2);
+        cellTime.innerHTML = dataJSON.Time;
+        cellLevel.innerHTML = dataJSON.Level;
+		cellContent.innerHTML = dataJSON.Content;
         index++;
         window.scrollTo(0,document.body.scrollHeight);
     };
@@ -155,10 +163,18 @@ if(typeof(EventSource) !== "undefined") {
 }
 </script>`
 
-//原来返回的消息
+//http历史记录消息
 type event struct {
-	Timestamp string `json:"timestamp"`
-	Message   string `json:"message"`
+	Time   string `json:"Time"`
+	URL    string `json:"URL"`
+	Status string `json:"Status"`
+}
+
+//扫描消息
+type eventScan struct {
+	Time    string `json:"Time`
+	Level   string `json:"Level"`
+	Content string `json:"Content"`
 }
 
 func Server(addr string) {
@@ -183,9 +199,10 @@ func Server(addr string) {
 				msg = MassageQueue.HttpHistoryQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
 				now := time.Now()
 				evt := event{
-					Timestamp: now.Format(time.RFC1123),
+					Time: now.Format(time.RFC1123),
 					//Timestamp: MassageQueue.MsgQueue.Size(),
-					Message: fmt.Sprintf("Msg is %s", msg["URL"]),
+					URL:    fmt.Sprintf("%s", msg["URL"]),
+					Status: fmt.Sprintf("%s", msg["Status"]),
 				}
 				evtBytes, err := json.Marshal(evt)
 				if err != nil {
@@ -206,6 +223,7 @@ func Server(addr string) {
                         <tr>
                             <th>时间</th> 
                             <th>url</th>
+							<th>状态</th>
                         </tr>
                     </table>
                 </body>
@@ -224,10 +242,11 @@ func Server(addr string) {
 			if MassageQueue.MsgQueue.Size() != 0 {
 				msg = MassageQueue.MsgQueue.Get() //根除这个问题不能通过判断massage是否为空  找到size突然不变的原因
 				now := time.Now()
-				evt := event{
-					Timestamp: now.Format(time.RFC1123),
+				evt := eventScan{
+					Time: now.Format(time.RFC1123),
 					//Timestamp: MassageQueue.MsgQueue.Size(),
-					Message: fmt.Sprintf("Msg is %s", msg["INFO"]),
+					Level:   fmt.Sprintf("%s", msg["Level"]),
+					Content: fmt.Sprintf("%s", msg["Content"]),
 				}
 				evtBytes, err := json.Marshal(evt)
 				if err != nil {
@@ -246,7 +265,8 @@ func Server(addr string) {
                     <h1 id="header">扫描结果</h1>
                     <table id="messagesTable" border="1">
                         <tr>
-                            <th>时间</th> 
+                            <th>时间</th>
+							<th>等级</th>
                             <th>消息</th>
                         </tr>
                     </table>

@@ -36,6 +36,7 @@ func (p *HttpHistory) GetPluginInfo() map[string]string {
 func (p *HttpHistory) GetHttp(Req *http.Request, Resp string) {
 	var msg map[string]string
 	msg = make(map[string]string)
-	msg["URL"] = Req.URL.String()
+	msg["URL"] = Req.URL.String() //获取url
+	msg["Status"] = Resp          //获取响应状态码
 	MassageQueue.HttpHistoryQueue.Put(msg)
 }
