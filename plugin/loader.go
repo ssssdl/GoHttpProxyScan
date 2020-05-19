@@ -41,14 +41,14 @@ func Loader(Req *http.Request, Resp string) {
 
 	/*****【实例化插件】******/
 	//所有的插件写好要到这里来实例化
-	plugin1 := new(plugin1)
+	XSSScan := new(XSSScan)
 	HttpHistory := new(HttpHistory)
 	//plugin2 := new(plugin2)
 	//plugin3 := new(plugin3)
 
 	/*****【注册插件】******/
 	//所有的插件写好要到这里来注册
-	plugin.register("plugin1", plugin1)
+	plugin.register("XSSScan", XSSScan)
 	plugin.register("HttpHistory", HttpHistory)
 	//plugin.register("plugin2", plugin2)
 	//plugin.register("plugin3", plugin3)

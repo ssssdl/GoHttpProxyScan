@@ -37,6 +37,6 @@ func (p *HttpHistory) GetHttp(Req *http.Request, Resp string) {
 	var msg map[string]string
 	msg = make(map[string]string)
 	msg["URL"] = Req.URL.String() //获取url
-	msg["Status"] = Resp          //获取响应状态码
+	msg["Status"] = Resp[9:12]    //获取响应状态码
 	MassageQueue.HttpHistoryQueue.Put(msg)
 }

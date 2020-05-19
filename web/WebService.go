@@ -287,7 +287,7 @@ func Server(addr string) {
 	app.RegisterView(tmpl)
 
 	/******* 【页面交互】 *******/
-	//todo  剔除网页上没有用的功能，最后收尾的时候做
+	//todo  剔除网页上没有用的功能，修改桌面，最后收尾的时候做
 	app.Get("/html", func(ctx context.Context) {
 		ctx.ViewData("title", "被动扫描器") //模板中添加数据，前面是模板中的key，后面是要渲染的内容，可以添加多个
 		ctx.View("index.html")
