@@ -1,8 +1,6 @@
 package plugin
 
 import (
-	"../MassageQueue"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -29,7 +27,7 @@ func (p *XSSScan) GetPluginInfo() map[string]string {
 	info["appPowerLink"] = "https://github.com/ssssdl" //漏洞组件官网
 	info["appName"] = "http"                           //漏洞组件名称，如apache
 	info["appVersion"] = "1.1"                         //漏洞组件版本
-	info["vulType"] = "info"                           //漏洞类型		//todo 文档中整理标准漏洞类型，漏洞类型只能填文档中的
+	info["vulType"] = "XSS"                            //漏洞类型		//todo 文档中整理标准漏洞类型，漏洞类型只能填文档中的
 	info["vulDesc"] = ""                               //漏洞描述
 	info["samples"] = "http://localhost"               //测试样例，利用该插件测试成功的网站
 	info["install_requires"] = ""                      //插件需要提前安装的第三方库，填github地址
@@ -39,8 +37,6 @@ func (p *XSSScan) GetPluginInfo() map[string]string {
 }
 
 func (p *XSSScan) GetHttp(Req *http.Request, Resp string) {
-	var msg map[string]string
-	msg = make(map[string]string)
 	/**
 	思路：
 	获取url中参数内容,到响应中匹配，如果匹配到了发送警告消息，标明是那个参数，如果含有<>"'等字符发送严重消息
@@ -49,22 +45,16 @@ func (p *XSSScan) GetHttp(Req *http.Request, Resp string) {
 	if err == nil {
 		for param := range queryForm {
 			if len(queryForm[param]) > 0 {
-				log.Println(queryForm[param][0])
+
 				//匹配响应中是否含有请求内容
 				if strings.Contains(Resp, queryForm[param][0]) {
+					//注意 这里可能只匹配到一次  因为页面缓存会出现304的情况
 					if strings.ContainsAny(queryForm[param][0], "<") {
-						/*******【整理消息】********/
-						msg["Level"] = "ERROR"
-						msg["Content"] = "XSS Scan:" + Req.URL.String() + " 请求中含有XSS漏洞，出现漏洞的参数为" + param
-
-						/*****【将消息发送到推送队列】******/
-						MassageQueue.MsgQueue.Put(msg)
+						Result := Req.URL.String() + " 请求中含有XSS漏洞，出现漏洞的参数为" + param
+						PutScanResults("ERROR", Result, "XSS Scan")
 					} else {
-						msg["Level"] = "WARNING"
-						msg["Content"] = "XSS Scan:" + Req.URL.String() + " 请求中可能含有XSS漏洞，出现漏洞的参数为" + param
-
-						/*****【将消息发送到推送队列】******/
-						MassageQueue.MsgQueue.Put(msg)
+						Result := Req.URL.String() + " 请求中可能含有XSS漏洞，出现漏洞的参数为" + param
+						PutScanResults("WARNING", Result, "XSS Scan")
 					}
 				}
 			}
