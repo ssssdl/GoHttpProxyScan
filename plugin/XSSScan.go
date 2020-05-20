@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-//todo 制作获取插件信息接口
-
 type XSSScan struct{}
 
 //todo 插件文档整理以下规范，以下为规范，需要使用者填写info中的信息

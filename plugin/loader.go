@@ -6,11 +6,9 @@ import (
 	"net/http"
 )
 
-//todo 再写一个敏感信息扫描的插件
-//todo 还可以写一个扫描点击劫持的插件
-//todo 还可以写一个扫描httponly的插件
-//todo  F5泄露内网IP的插件
-//todo  整理插件文档
+//todo  数据包保存插件
+
+//todo  整理插件文档，整理前端相关接口
 //MassageQueue.HttpHistoryQueue		http历史记录消息队列
 //MassageQueue.MsgQueue				插件扫描消息队列
 
@@ -50,6 +48,10 @@ func Loader(Req *http.Request, Resp string) {
 	XSSScan := new(XSSScan)
 	HttpHistory := new(HttpHistory)
 	SensitiveInformation := new(SensitiveInformation)
+	ClickHijacking := new(ClickHijacking)
+	HttpOnly := new(HttpOnly)
+	BIGipServerpool := new(BIGipServerpool)
+	BackUp := new(BackUp)
 	//plugin2 := new(plugin2)
 	//plugin3 := new(plugin3)
 
@@ -58,6 +60,10 @@ func Loader(Req *http.Request, Resp string) {
 	plugin.register("XSSScan", XSSScan)
 	plugin.register("HttpHistory", HttpHistory)
 	plugin.register("SensitiveInformation", SensitiveInformation)
+	plugin.register("ClickHijacking", ClickHijacking)
+	plugin.register("HttpOnly", HttpOnly)
+	plugin.register("BIGipServerpool", BIGipServerpool)
+	plugin.register("BackUp", BackUp)
 	//plugin.register("plugin2", plugin2)
 	//plugin.register("plugin3", plugin3)
 

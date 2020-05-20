@@ -1,31 +1,35 @@
 package main
 
 import (
+	"bufio"
 	"log"
-	"regexp"
+	"os"
+	"time"
+)
+
+var (
+	fileInfo *os.FileInfo
+	err      error
 )
 
 func main() {
-	//匹配电话号
+	//测试写入文件
+	//t := time.Now()
+	//log.Println(t.Format("2020052019"))
+	logFileName := time.Now().Format("2006010215") + ".log"
+	logDir := "../HttpBackUp/"
 
-	Resp := "<h1>10.203.87.61</h1>" +
-		"电话：18904081710<br>" +
-		"邮箱：<br>" +
-		"身份证号：150428199711100131"
-	//开始匹配//ssssdl@qq.com
-
-	//IP
-	findIP := regexp.MustCompile("[\\d]+\\.[\\d]+\\.[\\d]+\\.[\\d]+")
-	IP := findIP.FindString(Resp)
-	log.Println("IP:" + IP)
-
-	//电话 身份证号增加至相关位数
-	findPH := regexp.MustCompile("\\d{11}")
-	PH := findPH.FindString(Resp)
-	log.Println("PH:" + PH)
-
-	//邮箱
-	findMail := regexp.MustCompile(`\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*`)
-	Mail := findMail.FindString(Resp)
-	log.Println(Mail)
+	file, err := os.OpenFile(logDir+logFileName, os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Println("日志文件的打开异常")
+		log.Fatal(err)
+	}
+	defer file.Close()
+	buffer := bufio.NewWriter(file)
+	bw, err := buffer.WriteString("\n写入字符串")
+	if err != nil {
+		log.Fatal(err)
+	}
+	buffer.Flush()
+	log.Printf("Bytes written: %d\n", bw)
 }
