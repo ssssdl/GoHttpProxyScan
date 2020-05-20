@@ -698,7 +698,7 @@ var GetTaskRight = function(obj){
 //任务栏右键提示
 var GetTaskSystem = function(obj){
     if(!_cache.TaskSystem){
-        _cache.TaskSystem = $('<div class="popup-menu task-menu" style="z-index:99999;bottom:30px;display:none"><ul><li><a menu="close" href="javascript:;">用户登录</a></li><li><a menu="close" href="javascript:;">用户登录</a></li></ul></div>');
+        _cache.TaskSystem = $('<div class="popup-menu task-menu" style="z-index:99999;bottom:30px;display:none"><ul><li><a menu="close" href="javascript:createProxy();">创建代理</a></li><li><a menu="close" href="javascript:;">用户登录</a></li></ul></div>');
         $(document.body).append(_cache.TaskSystem);
         $('.task-menu').bind('contextmenu',function(){
             return false;
@@ -724,4 +724,26 @@ var ie6iframeheight = function(){
     if($.browser.msie && $.browser.version==="6.0"){
         $('.window-frame').css("height",($('.window-frame').parent().height()-59)+"px");
     }
+}
+
+
+
+function createProxy(){
+    $.ajax({
+        //请求方式
+        type : "GET",
+        //请求的媒体类型
+        contentType: "application/json;charset=UTF-8",
+        //请求地址
+        url : "http://"+document.domain+":"+window.location.port+"/createProxy",
+        //请求成功
+        success : function(result) {
+            ZENG.msgbox.show(result, 1, 2000);
+        },
+        //请求失败，包含具体的错误信息
+        error : function(e){
+            console.log(e.status);
+            console.log(e.responseText);
+        }
+    });
 }

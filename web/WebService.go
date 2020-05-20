@@ -11,12 +11,19 @@ package web
 */
 import (
 	"../MassageQueue"
+	"../proxy"
+	"container/list"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/kataras/golog"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
+	"net/http"
+	"strconv"
+	"strings"
+	"sync"
 	"time"
 
 	//注意: 由于某种原因，最新的vscode-go语言扩展不能提供足够智能帮助（参数文档并转到定义功能）
@@ -177,6 +184,55 @@ type eventScan struct {
 	Content string `json:"Content"`
 }
 
+//关于代理相关的函数
+func http_proxy_simple(addr string) {
+	proxy := proxy.New()
+	server := &http.Server{
+		Addr:         addr,
+		Handler:      proxy,
+		ReadTimeout:  1 * time.Minute,
+		WriteTimeout: 1 * time.Minute,
+	}
+	err := server.ListenAndServe()
+	if err != nil {
+		panic(err)
+	}
+}
+
+// https解密 需要导入根证书 mitm-proxy.crt
+// 实现证书缓存接口
+type Cache struct {
+	m sync.Map
+}
+
+func (c *Cache) Set(host string, cert *tls.Certificate) {
+	c.m.Store(host, cert)
+}
+func (c *Cache) Get(host string) *tls.Certificate {
+	v, ok := c.m.Load(host)
+	if !ok {
+		return nil
+	}
+
+	return v.(*tls.Certificate)
+}
+func https_Decrypt(addr string) {
+	proxy := proxy.New(proxy.WithDecryptHTTPS(&Cache{}))
+	server := &http.Server{
+		Addr:         addr,
+		Handler:      proxy,
+		ReadTimeout:  1 * time.Minute,
+		WriteTimeout: 1 * time.Minute,
+	}
+	err := server.ListenAndServe()
+	if err != nil {
+		panic(err)
+	}
+}
+
+var Addr = "localhost:8080" //默认访问地址
+var ProxyPort = 8081
+
 func Server(addr string) {
 	/***** 【配置web服务】 *****/
 	app := iris.New()
@@ -291,6 +347,40 @@ func Server(addr string) {
 	app.Get("/html", func(ctx context.Context) {
 		ctx.ViewData("title", "被动扫描器") //模板中添加数据，前面是模板中的key，后面是要渲染的内容，可以添加多个
 		ctx.View("index.html")
+	})
+
+	ProxyList := list.New()
+	//todo 制作启动代理的接口 返回代理接口
+	app.Get("/createProxy", func(ctx context.Context) {
+		//启动
+		comma := strings.Index(Addr, ":")
+		go func() {
+			app.Logger().Println("创建成功,代理地址：" + Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+			ProxyList.PushBack(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+			http_proxy_simple(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+		}()
+		ProxyPort++ //会先执行这条语句后执行创建代理
+		ctx.WriteString("创建成功,代理地址：" + Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+	})
+
+	//todo 制作代理查询接口，查看都那些端口上启动了代理  使用map存储
+	app.Get("/showproxy", func(ctx context.Context) {
+		HtmlTmp := "<html><head><title>代理列表</title></head>" +
+			"<body>" +
+			"<h1 id=\"header\">代理列表</h1>" +
+			"<table id=\"messagesTable\" border=\"1\">" +
+			"<tr>" +
+			"<th>序号</th>" +
+			"<th>代理地址</th>" +
+			"</tr>"
+		j := 0
+		for i := ProxyList.Front(); i != nil; i = i.Next() {
+			HtmlTmp += "<tr><td>" + strconv.Itoa(j) + "</td><td>" + fmt.Sprint(i.Value) + "</td></tr>"
+		}
+		HtmlTmp += `</table>
+		</body>
+		</html>`
+		ctx.HTML(HtmlTmp)
 	})
 
 	app.Run(iris.Addr(addr), iris.WithoutServerError(iris.ErrServerClosed))

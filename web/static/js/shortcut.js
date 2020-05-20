@@ -2,7 +2,7 @@
 var shortcut = [
 [0,"HTTP历史记录","./static/images/icos/logo_hd.png","http://localhost:8080/ssehttp",1000,500],
 [1,"扫描信息","./static/images/icos/ku6.png","http://localhost:8080/ssescan",770,500],
-[2,"源码之家","./static/images/icos/logo_hd.png","http://www.mycodes.net/",1000,500],
+[2,"代理列表","./static/images/icos/logo_hd.png","http://localhost:8080/showproxy",1000,500],
 [3,"豆瓣FM","./static/images/icos/news.png","http://douban.fm/",1024,500],
 [4,"源码之家","./static/images/icos/logo_hd.png","http://www.mycodes.net/",600,500],
 [5,"源码之家","./static/images/icos/logo_hd.png","http://www.mycodes.net",1000,500],
