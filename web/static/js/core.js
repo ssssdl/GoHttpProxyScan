@@ -38,20 +38,22 @@ Core.menu={
         func: function() {
             $('body').reload();
         }
-    }, {
-        text: "新建",
-        data: [[{
-            text: "文本文件",
-            func: function() {
-                ZENG.msgbox.show("文本文件！", 1, 2000);
-            }
-        }, {
-            text: "Execl",
-            func: function() {
-                ZENG.msgbox.show("Execl！", 1, 2000);
-            }       
-        }]]
-    },{
+    },
+    //     {
+    //     text: "新建",
+    //     data: [[{
+    //         text: "文本文件",
+    //         func: function() {
+    //             ZENG.msgbox.show("文本文件！", 1, 2000);
+    //         }
+    //     }, {
+    //         text: "Execl",
+    //         func: function() {
+    //             ZENG.msgbox.show("Execl！", 1, 2000);
+    //         }
+    //     }]]
+    // },
+        {
         text:"显示桌面",
         func:function(){
             Core.showDesktop();
@@ -698,7 +700,7 @@ var GetTaskRight = function(obj){
 //任务栏右键提示
 var GetTaskSystem = function(obj){
     if(!_cache.TaskSystem){
-        _cache.TaskSystem = $('<div class="popup-menu task-menu" style="z-index:99999;bottom:30px;display:none"><ul><li><a menu="close" href="javascript:createProxy();">创建代理</a></li><li><a menu="close" href="javascript:;">用户登录</a></li></ul></div>');
+        _cache.TaskSystem = $('<div class="popup-menu task-menu" style="z-index:99999;bottom:30px;display:none"><ul><li><a menu="close" href="javascript:createProxy();">创建代理</a></li><!--<li><a menu="close" href="javascript:;">用户登录</a></li>--></ul></div>');
         $(document.body).append(_cache.TaskSystem);
         $('.task-menu').bind('contextmenu',function(){
             return false;
