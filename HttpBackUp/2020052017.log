@@ -1,0 +1,19 @@
+
+==================[2020-05-20 17:13:15]=======================
+GET http://141.164.40.87/1.txt HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+If-Modified-Since: Sun, 17 May 2020 14:45:11 GMT
+If-None-Match: "5-5a5d917efe7ea"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 304 Not Modified
+Date: Wed, 20 May 2020 09:13:16 GMT
+Etag: "5-5a5d917efe7ea"
+Server: Apache/2.4.41 (Ubuntu)
+

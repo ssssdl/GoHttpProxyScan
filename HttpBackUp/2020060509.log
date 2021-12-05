@@ -1,0 +1,2417 @@
+
+==================[2020-06-05 09:03:33]=======================
+GET http://192.168.91.133/DVWA/vulnerabilities/xss_r/ HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+Referer: http://192.168.91.133/DVWA/security.php
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 4344
+Cache-Control: no-cache, must-revalidate
+Content-Type: text/html;charset=utf-8
+Date: Fri, 05 Jun 2020 01:03:33 GMT
+Expires: Tue, 23 Jun 2009 12:00:00 GMT
+Pragma: no-cache
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+X-Powered-By: PHP/5.4.16
+X-Xss-Protection: 0
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>Vulnerability: Reflected Cross Site Scripting (XSS) :: Damn Vulnerable Web Application (DVWA) v1.10 *Development*</title>
+
+		<link rel="stylesheet" type="text/css" href="../../dvwa/css/main.css" />
+
+		<link rel="icon" type="\image/ico" href="../../favicon.ico" />
+
+		<script type="text/javascript" src="../../dvwa/js/dvwaPage.js"></script>
+
+	</head>
+
+	<body class="home">
+		<div id="container">
+
+			<div id="header">
+
+				<img src="../../dvwa/images/logo.png" alt="Damn Vulnerable Web Application" />
+
+			</div>
+
+			<div id="main_menu">
+
+				<div id="main_menu_padded">
+				<ul class="menuBlocks"><li class=""><a href="../../.">Home</a></li>
+<li class=""><a href="../../instructions.php">Instructions</a></li>
+<li class=""><a href="../../setup.php">Setup / Reset DB</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../vulnerabilities/brute/">Brute Force</a></li>
+<li class=""><a href="../../vulnerabilities/exec/">Command Injection</a></li>
+<li class=""><a href="../../vulnerabilities/csrf/">CSRF</a></li>
+<li class=""><a href="../../vulnerabilities/fi/.?page=include.php">File Inclusion</a></li>
+<li class=""><a href="../../vulnerabilities/upload/">File Upload</a></li>
+<li class=""><a href="../../vulnerabilities/captcha/">Insecure CAPTCHA</a></li>
+<li class=""><a href="../../vulnerabilities/sqli/">SQL Injection</a></li>
+<li class=""><a href="../../vulnerabilities/sqli_blind/">SQL Injection (Blind)</a></li>
+<li class=""><a href="../../vulnerabilities/weak_id/">Weak Session IDs</a></li>
+<li class=""><a href="../../vulnerabilities/xss_d/">XSS (DOM)</a></li>
+<li class="selected"><a href="../../vulnerabilities/xss_r/">XSS (Reflected)</a></li>
+<li class=""><a href="../../vulnerabilities/xss_s/">XSS (Stored)</a></li>
+<li class=""><a href="../../vulnerabilities/csp/">CSP Bypass</a></li>
+<li class=""><a href="../../vulnerabilities/javascript/">JavaScript</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../security.php">DVWA Security</a></li>
+<li class=""><a href="../../phpinfo.php">PHP Info</a></li>
+<li class=""><a href="../../about.php">About</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../logout.php">Logout</a></li>
+</ul>
+				</div>
+
+			</div>
+
+			<div id="main_body">
+
+				
+<div class="body_padded">
+	<h1>Vulnerability: Reflected Cross Site Scripting (XSS)</h1>
+
+	<div class="vulnerable_code_area">
+		<form name="XSS" action="#" method="GET">
+			<p>
+				What's your name?
+				<input type="text" name="name">
+				<input type="submit" value="Submit">
+			</p>
+
+		</form>
+		
+	</div>
+
+	<h2>More Information</h2>
+	<ul>
+		<li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank">https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)</a></li>
+		<li><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></li>
+		<li><a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">https://en.wikipedia.org/wiki/Cross-site_scripting</a></li>
+		<li><a href="http://www.cgisecurity.com/xss-faq.html" target="_blank">http://www.cgisecurity.com/xss-faq.html</a></li>
+		<li><a href="http://www.scriptalert1.com/" target="_blank">http://www.scriptalert1.com/</a></li>
+	</ul>
+</div>
+
+				<br /><br />
+				
+
+			</div>
+
+			<div class="clear">
+			</div>
+
+			<div id="system_info">
+				<input type="button" value="View Help" class="popup_button" id='help_button' data-help-url='../../vulnerabilities/view_help.php?id=xss_r&security=low' )"> <input type="button" value="View Source" class="popup_button" id='source_button' data-source-url='../../vulnerabilities/view_source.php?id=xss_r&security=low' )"> <div align="left"><em>Username:</em> admin<br /><em>Security Level:</em> low<br /><em>PHPIDS:</em> disabled</div>
+			</div>
+
+			<div id="footer">
+
+				<p>Damn Vulnerable Web Application (DVWA) v1.10 *Development*</p>
+				<script src='../..//dvwa/js/add_event_listeners.js'></script>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+==================[2020-06-05 09:03:33]=======================
+GET http://192.168.91.133/DVWA/dvwa/css/main.css HTTP/1.1
+Accept: text/css,*/*;q=0.1
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+If-Modified-Since: Sun, 19 Apr 2020 07:05:50 GMT
+If-None-Match: "fba-5a39f6994fa8b"
+Referer: http://192.168.91.133/DVWA/vulnerabilities/xss_r/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 304 Not Modified
+Date: Fri, 05 Jun 2020 01:03:33 GMT
+Etag: "fba-5a39f6994fa8b"
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+
+
+==================[2020-06-05 09:03:33]=======================
+GET http://192.168.91.133/DVWA/dvwa/js/dvwaPage.js HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+If-Modified-Since: Sun, 19 Apr 2020 07:05:50 GMT
+If-None-Match: "406-5a39f6994fe73"
+Referer: http://192.168.91.133/DVWA/vulnerabilities/xss_r/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 304 Not Modified
+Date: Fri, 05 Jun 2020 01:03:33 GMT
+Etag: "406-5a39f6994fe73"
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+
+
+==================[2020-06-05 09:03:33]=======================
+GET http://192.168.91.133/DVWA//dvwa/js/add_event_listeners.js HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+If-Modified-Since: Sun, 19 Apr 2020 07:05:50 GMT
+If-None-Match: "251-5a39f6994fe73"
+Referer: http://192.168.91.133/DVWA/vulnerabilities/xss_r/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 304 Not Modified
+Date: Fri, 05 Jun 2020 01:03:33 GMT
+Etag: "251-5a39f6994fe73"
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+
+
+==================[2020-06-05 09:03:33]=======================
+GET http://192.168.91.133/DVWA/dvwa/images/logo.png HTTP/1.1
+Accept: image/webp,*/*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: max-age=0
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+If-Modified-Since: Sun, 19 Apr 2020 07:05:50 GMT
+If-None-Match: "13b4-5a39f6994fe73"
+Referer: http://192.168.91.133/DVWA/vulnerabilities/xss_r/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 304 Not Modified
+Date: Fri, 05 Jun 2020 01:03:33 GMT
+Etag: "13b4-5a39f6994fe73"
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+
+
+==================[2020-06-05 09:03:52]=======================
+GET http://192.168.91.133/DVWA/vulnerabilities/xss_r/?name=121 HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+Referer: http://192.168.91.133/DVWA/vulnerabilities/xss_r/
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 4364
+Cache-Control: no-cache, must-revalidate
+Content-Type: text/html;charset=utf-8
+Date: Fri, 05 Jun 2020 01:03:52 GMT
+Expires: Tue, 23 Jun 2009 12:00:00 GMT
+Pragma: no-cache
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+X-Powered-By: PHP/5.4.16
+X-Xss-Protection: 0
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>Vulnerability: Reflected Cross Site Scripting (XSS) :: Damn Vulnerable Web Application (DVWA) v1.10 *Development*</title>
+
+		<link rel="stylesheet" type="text/css" href="../../dvwa/css/main.css" />
+
+		<link rel="icon" type="\image/ico" href="../../favicon.ico" />
+
+		<script type="text/javascript" src="../../dvwa/js/dvwaPage.js"></script>
+
+	</head>
+
+	<body class="home">
+		<div id="container">
+
+			<div id="header">
+
+				<img src="../../dvwa/images/logo.png" alt="Damn Vulnerable Web Application" />
+
+			</div>
+
+			<div id="main_menu">
+
+				<div id="main_menu_padded">
+				<ul class="menuBlocks"><li class=""><a href="../../.">Home</a></li>
+<li class=""><a href="../../instructions.php">Instructions</a></li>
+<li class=""><a href="../../setup.php">Setup / Reset DB</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../vulnerabilities/brute/">Brute Force</a></li>
+<li class=""><a href="../../vulnerabilities/exec/">Command Injection</a></li>
+<li class=""><a href="../../vulnerabilities/csrf/">CSRF</a></li>
+<li class=""><a href="../../vulnerabilities/fi/.?page=include.php">File Inclusion</a></li>
+<li class=""><a href="../../vulnerabilities/upload/">File Upload</a></li>
+<li class=""><a href="../../vulnerabilities/captcha/">Insecure CAPTCHA</a></li>
+<li class=""><a href="../../vulnerabilities/sqli/">SQL Injection</a></li>
+<li class=""><a href="../../vulnerabilities/sqli_blind/">SQL Injection (Blind)</a></li>
+<li class=""><a href="../../vulnerabilities/weak_id/">Weak Session IDs</a></li>
+<li class=""><a href="../../vulnerabilities/xss_d/">XSS (DOM)</a></li>
+<li class="selected"><a href="../../vulnerabilities/xss_r/">XSS (Reflected)</a></li>
+<li class=""><a href="../../vulnerabilities/xss_s/">XSS (Stored)</a></li>
+<li class=""><a href="../../vulnerabilities/csp/">CSP Bypass</a></li>
+<li class=""><a href="../../vulnerabilities/javascript/">JavaScript</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../security.php">DVWA Security</a></li>
+<li class=""><a href="../../phpinfo.php">PHP Info</a></li>
+<li class=""><a href="../../about.php">About</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../logout.php">Logout</a></li>
+</ul>
+				</div>
+
+			</div>
+
+			<div id="main_body">
+
+				
+<div class="body_padded">
+	<h1>Vulnerability: Reflected Cross Site Scripting (XSS)</h1>
+
+	<div class="vulnerable_code_area">
+		<form name="XSS" action="#" method="GET">
+			<p>
+				What's your name?
+				<input type="text" name="name">
+				<input type="submit" value="Submit">
+			</p>
+
+		</form>
+		<pre>Hello 121</pre>
+	</div>
+
+	<h2>More Information</h2>
+	<ul>
+		<li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank">https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)</a></li>
+		<li><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></li>
+		<li><a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">https://en.wikipedia.org/wiki/Cross-site_scripting</a></li>
+		<li><a href="http://www.cgisecurity.com/xss-faq.html" target="_blank">http://www.cgisecurity.com/xss-faq.html</a></li>
+		<li><a href="http://www.scriptalert1.com/" target="_blank">http://www.scriptalert1.com/</a></li>
+	</ul>
+</div>
+
+				<br /><br />
+				
+
+			</div>
+
+			<div class="clear">
+			</div>
+
+			<div id="system_info">
+				<input type="button" value="View Help" class="popup_button" id='help_button' data-help-url='../../vulnerabilities/view_help.php?id=xss_r&security=low' )"> <input type="button" value="View Source" class="popup_button" id='source_button' data-source-url='../../vulnerabilities/view_source.php?id=xss_r&security=low' )"> <div align="left"><em>Username:</em> admin<br /><em>Security Level:</em> low<br /><em>PHPIDS:</em> disabled</div>
+			</div>
+
+			<div id="footer">
+
+				<p>Damn Vulnerable Web Application (DVWA) v1.10 *Development*</p>
+				<script src='../..//dvwa/js/add_event_listeners.js'></script>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+==================[2020-06-05 09:04:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:04:14]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:14 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:04:14]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:14 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:04:27]=======================
+GET http://192.168.91.133/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cookie: security=low; PHPSESSID=2ie5omkrjf3113otf8onalpcn6
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 4386
+Cache-Control: no-cache, must-revalidate
+Content-Type: text/html;charset=utf-8
+Date: Fri, 05 Jun 2020 01:04:27 GMT
+Expires: Tue, 23 Jun 2009 12:00:00 GMT
+Pragma: no-cache
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+X-Powered-By: PHP/5.4.16
+X-Xss-Protection: 0
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>Vulnerability: Reflected Cross Site Scripting (XSS) :: Damn Vulnerable Web Application (DVWA) v1.10 *Development*</title>
+
+		<link rel="stylesheet" type="text/css" href="../../dvwa/css/main.css" />
+
+		<link rel="icon" type="\image/ico" href="../../favicon.ico" />
+
+		<script type="text/javascript" src="../../dvwa/js/dvwaPage.js"></script>
+
+	</head>
+
+	<body class="home">
+		<div id="container">
+
+			<div id="header">
+
+				<img src="../../dvwa/images/logo.png" alt="Damn Vulnerable Web Application" />
+
+			</div>
+
+			<div id="main_menu">
+
+				<div id="main_menu_padded">
+				<ul class="menuBlocks"><li class=""><a href="../../.">Home</a></li>
+<li class=""><a href="../../instructions.php">Instructions</a></li>
+<li class=""><a href="../../setup.php">Setup / Reset DB</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../vulnerabilities/brute/">Brute Force</a></li>
+<li class=""><a href="../../vulnerabilities/exec/">Command Injection</a></li>
+<li class=""><a href="../../vulnerabilities/csrf/">CSRF</a></li>
+<li class=""><a href="../../vulnerabilities/fi/.?page=include.php">File Inclusion</a></li>
+<li class=""><a href="../../vulnerabilities/upload/">File Upload</a></li>
+<li class=""><a href="../../vulnerabilities/captcha/">Insecure CAPTCHA</a></li>
+<li class=""><a href="../../vulnerabilities/sqli/">SQL Injection</a></li>
+<li class=""><a href="../../vulnerabilities/sqli_blind/">SQL Injection (Blind)</a></li>
+<li class=""><a href="../../vulnerabilities/weak_id/">Weak Session IDs</a></li>
+<li class=""><a href="../../vulnerabilities/xss_d/">XSS (DOM)</a></li>
+<li class="selected"><a href="../../vulnerabilities/xss_r/">XSS (Reflected)</a></li>
+<li class=""><a href="../../vulnerabilities/xss_s/">XSS (Stored)</a></li>
+<li class=""><a href="../../vulnerabilities/csp/">CSP Bypass</a></li>
+<li class=""><a href="../../vulnerabilities/javascript/">JavaScript</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../security.php">DVWA Security</a></li>
+<li class=""><a href="../../phpinfo.php">PHP Info</a></li>
+<li class=""><a href="../../about.php">About</a></li>
+</ul><ul class="menuBlocks"><li class=""><a href="../../logout.php">Logout</a></li>
+</ul>
+				</div>
+
+			</div>
+
+			<div id="main_body">
+
+				
+<div class="body_padded">
+	<h1>Vulnerability: Reflected Cross Site Scripting (XSS)</h1>
+
+	<div class="vulnerable_code_area">
+		<form name="XSS" action="#" method="GET">
+			<p>
+				What's your name?
+				<input type="text" name="name">
+				<input type="submit" value="Submit">
+			</p>
+
+		</form>
+		<pre>Hello <script>alert(1)</script></pre>
+	</div>
+
+	<h2>More Information</h2>
+	<ul>
+		<li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank">https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)</a></li>
+		<li><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></li>
+		<li><a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">https://en.wikipedia.org/wiki/Cross-site_scripting</a></li>
+		<li><a href="http://www.cgisecurity.com/xss-faq.html" target="_blank">http://www.cgisecurity.com/xss-faq.html</a></li>
+		<li><a href="http://www.scriptalert1.com/" target="_blank">http://www.scriptalert1.com/</a></li>
+	</ul>
+</div>
+
+				<br /><br />
+				
+
+			</div>
+
+			<div class="clear">
+			</div>
+
+			<div id="system_info">
+				<input type="button" value="View Help" class="popup_button" id='help_button' data-help-url='../../vulnerabilities/view_help.php?id=xss_r&security=low' )"> <input type="button" value="View Source" class="popup_button" id='source_button' data-source-url='../../vulnerabilities/view_source.php?id=xss_r&security=low' )"> <div align="left"><em>Username:</em> admin<br /><em>Security Level:</em> low<br /><em>PHPIDS:</em> disabled</div>
+			</div>
+
+			<div id="footer">
+
+				<p>Damn Vulnerable Web Application (DVWA) v1.10 *Development*</p>
+				<script src='../..//dvwa/js/add_event_listeners.js'></script>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+==================[2020-06-05 09:04:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:04:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:04:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:04:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:09:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:09:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:14:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:14:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:17:07]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:17:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:17:07]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:17:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:17:07]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:17:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:19:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:19:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:24:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:24:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:29:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:29:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:34:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:34:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:39:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:39:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:44:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:44:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:47:07]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:47:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:47:07]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:47:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:47:07]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:47:07 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:49:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:49:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:54:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:54:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:55:18]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:55:18 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:55:18]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:55:18 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:55:18]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:55:18 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:13]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:13]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:13 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:39]=======================
+GET http://detectportal.firefox.com/success.txt HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv4 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success
+
+==================[2020-06-05 09:59:39]=======================
+GET http://detectportal.firefox.com/success.txt?ipv6 HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+
+
+=======================================================
+HTTP/1.1 200 OK
+Content-Length: 8
+Accept-Ranges: bytes
+Cache-Control: no-cache, no-store, must-revalidate
+Content-Type: text/plain
+Date: Fri, 05 Jun 2020 01:59:39 GMT
+Etag: "ae780585f49b94ce1444eb7d28906123"
+Last-Modified: Mon, 15 May 2017 18:04:40 GMT
+Server: AmazonS3
+X-Amz-Cf-Id: mLjwZcRiJdlU0G9vekjjC3PVKfhfJmf-IX0kXPsS8ju02HVAulLzzg==
+
+success

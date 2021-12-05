@@ -357,7 +357,8 @@ func Server(addr string) {
 		go func() {
 			app.Logger().Println("创建成功,代理地址：" + Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
 			ProxyList.PushBack(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
-			http_proxy_simple(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+			//http_proxy_simple(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
+			https_Decrypt(Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
 		}()
 		ProxyPort++ //会先执行这条语句后执行创建代理
 		ctx.WriteString("创建成功,代理地址：" + Addr[:comma] + ":" + strconv.Itoa(ProxyPort))
